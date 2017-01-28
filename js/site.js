@@ -49,6 +49,11 @@ function makeCorsRequest() {
     alert('Woops, there was an error making the request.');
   };
 
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+  xhr.setRequestHeader("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
+  console.log(xhr);
+
   xhr.send();
 }
 

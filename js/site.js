@@ -1,10 +1,3 @@
-// Assign handlers immediately after making the request,
-// and remember the jqxhr object for this request
-// var jqxhr = $.post( "https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJrTLr-GyuEmsRBfy61i59si0&key=AIzaSyAdk3aCGQc203koypJn2oQNdSy9SVNAt2U", function(data) {
-//   alert( "success " + data );
-// });
-
-
 // Create the XHR object.
 function createCORSRequest(method, url) {
   var xhr = new XMLHttpRequest();
@@ -22,17 +15,14 @@ function createCORSRequest(method, url) {
   return xhr;
 }
 
-// Helper method to parse the title tag from the response.
-function getTitle(text) {
-  return text.match('<title>(.*)?</title>')[1];
-}
-
 // Make the actual CORS request.
 function makeCorsRequest() {
   // This is a sample server that supports CORS.
   var url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJrTLr-GyuEmsRBfy61i59si0&key=AIzaSyAdk3aCGQc203koypJn2oQNdSy9SVNAt2U';
 
   var xhr = createCORSRequest('GET', url);
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.setRequestHeader("Access-Control-Allow-Headers", "x-requested-with");
   if (!xhr) {
     alert('CORS not supported');
     return;
@@ -41,16 +31,16 @@ function makeCorsRequest() {
   // Response handlers.
   xhr.onload = function() {
     var text = xhr.responseText;
-    var title = getTitle(text);
-    alert('Response from CORS request to ' + url + ': ' + title);
+    // var title = getTitle(text);
+    console.log('Response from CORS request to ' + url + ': ');
+    console.log('Body ' + text);
   };
 
   xhr.onerror = function() {
     alert('Woops, there was an error making the request.');
-  };
+  }
 
-  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-  xhr.setRequestHeader("Access-Control-Allow-Headers", "*");
+
  
 //   xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
 //   xhr.setRequestHeader("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
